@@ -1,0 +1,61 @@
+
+{% extends "panel/layout.html" %}
+
+{% block content %}
+
+    <h2>Novo alerta</h2>
+
+    {% for message in get_flashed_messages() %}
+    <div class="w3-panel w3-yellow w3-border w3-margin">
+        <h3>Atenção!</h3>
+        <p> {{ message }} </p>
+    </div>
+    {% endfor %}
+
+    <!-- For creating the alert -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+
+        {{ formAlert.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Nome do alerta:&emsp;</b></label>
+            {{ formAlert.name }}
+        </p>
+        <p>
+            <label class="w3-text-black"><b>Ativo:&emsp;</b></label>
+            {{ formAlert.asset }}
+        </p>
+        <p>
+            <label class="w3-text-black"><b>Candle:&emsp;</b></label>
+            {{ formAlert.interval }}
+        </p>
+        <p>
+            <label class="w3-text-black"><b>Tipo de alerta:&emsp;</b></label>
+            {{ formAlert.type(onchange="showFields()") }}
+        </p>
+        <!-- For each alert -->
+        <p id="target_field" style="display: block">
+            <label class="w3-text-black"><b>Preço alvo:&emsp;</b></label>
+            {{ formPriceTarget.target }}
+        </p>
+        <!-- ... -->
+        <input type="submit" value="Criar alerta">
+    </form>
+
+    <!-- For manipulating the fields for the alert type -->
+    <script>
+        function showFields() {
+
+            var selector = document.getElementById("type");
+
+            // For each alert...
+            if (selector.value == "price_target") {
+                document.getElementById("target_field").style.display = "block";
+                // Toggle each alert field...
+            }
+
+        }
+    </script>
+
+
+
+{% endblock %}

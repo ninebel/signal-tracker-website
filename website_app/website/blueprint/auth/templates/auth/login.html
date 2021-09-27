@@ -1,0 +1,40 @@
+{% extends "auth/layout.html" %}
+
+<!-- Login -->
+{% block content %}
+<header class="w3-container w3-green w3-center" style="padding:15% 25%">
+
+    <div class="w3-card-4 w3-margin w3-margin w3-white">
+
+        <div class="w3-container w3-grey w3-xlarge">
+            <h2>Entre na sua conta</h2>
+        </div>
+
+        <!-- Show the errors -->   
+        {% for message in get_flashed_messages() %}
+        <div class="w3-panel w3-yellow w3-border w3-margin">
+            <h3>Atenção!</h3>
+            <p> {{ message }} </p>
+        </div>
+        {% endfor %}
+
+        <!-- Login form -->
+        <form class="w3-container w3-white w3-large" action="" method="POST">
+
+            {{ form.csrf_token }}
+            <p>
+            <label class="w3-text-black"><b>Email:&emsp;</b></label>
+            {{ form.email }}
+            </p>
+            <p>
+            <label class="w3-text-black"><b>Senha:&emsp;</b></label>
+            {{ form.password }}
+            </p>
+
+            <input type="submit" value="Entrar">
+        </form>
+
+    </div>
+
+</header>
+{% endblock %}

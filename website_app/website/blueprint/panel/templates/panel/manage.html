@@ -1,0 +1,80 @@
+
+{% extends "panel/layout.html" %}
+
+{% block content %}
+
+    <h2>Informações de alerta</h2>
+
+    {% for message in get_flashed_messages() %}
+    <div class="w3-panel w3-yellow w3-border w3-margin">
+        <h3>Atenção!</h3>
+        <p> {{ message }} </p>
+    </div>
+    {% endfor %}
+
+    <hr>
+    <p>
+        <label class="w3-text-black"><b>Tipo:&emsp;</b> {{ api_call('alerts', 'get', id=id, field='type') }}</label>
+    </p>
+    <hr>
+    <p>
+        <label class="w3-text-black"><b>Ativo:&emsp;</b> {{ api_call('alerts', 'get', id=id, field='asset') }}</label>
+    </p>
+    <hr>
+    <p>
+        <label class="w3-text-black"><b>Candle:&emsp;</b> {{ api_call('alerts', 'get', id=id, field='interval') }}</label>
+    </p>
+    <hr>
+    <!-- This is for changing the enable state -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+
+        {{ formEnable.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Ligado (funcionando):&emsp;</b></label>
+            {{ formEnable.enable }}
+            <input type="submit" name={{ formEnable.__class__.__name__ }} value="Atualizar estado">
+        </p>
+    </form>
+    <hr>
+    <!-- This is for changing the name -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+
+        {{ formName.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Nome do alerta:&emsp;</b></label>
+            {{ formName.name }}
+            <input type="submit" name={{ formName.__class__.__name__ }} value="Atualizar nome">
+        </p>
+    </form>
+    <hr>
+    <!-- This is for changing the alert attributes -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+
+        {{ formAlert.csrf_token }}
+
+        <p>
+            <!-- For alert: price_target -->
+            {% if api_call('alerts', 'get', id=id, field='type') == 'price_target' %}
+                
+                    <label class="w3-text-black"><b>Preço alvo:&emsp;</b></label>
+                    {{ formAlert.target }}
+
+            {% endif %}
+
+            <!-- For each alert... -->
+            <input type="submit" name={{ formAlert.__class__.__name__ }} value="Atualizar parâmetros">
+        </p>
+    </form>
+    <hr>
+    <!-- This is for deleting an alert -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+        {{ formDelete.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Deletar este alerta:&emsp;</b></label>
+            {{ formDelete.delete }}
+        </p>
+    </form>
+    <hr>
+
+
+{% endblock %}

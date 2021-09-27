@@ -1,0 +1,27 @@
+
+{% extends "panel/layout.html" %}
+
+{% block content %}
+
+    {% for message in get_flashed_messages() %}
+    <div class="w3-panel w3-yellow w3-border w3-margin">
+        <h3>Atenção!</h3>
+        <p> {{ message }} </p>
+    </div>
+    {% endfor %}
+
+    <h2>Bem-vindo (a) {{ api_call('users', 'get', id=session['id'], field='first_name') }}!</h2>
+
+    <h2>Seus alertas ({{ api_call('users', 'get', id=session['id'], field='claimed_alerts') }}/{{ api_call('users', 'get', id=session['id'], field='max_alerts') }})</h2>
+
+    <ul>
+        {% for id in api_call('alerts', 'query', owner_id=session['id']) %}
+        <li><a href="/panel/manage/{{ id }}">{{ api_call('alerts', 'get', id=id, field='name') }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <br>
+
+    <button class="w3-button w3-white w3-padding-large w3-large w3-margin-top" onclick="window.location.href='/panel/create'">Criar alerta</button>
+
+{% endblock %}

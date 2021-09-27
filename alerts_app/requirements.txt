@@ -1,0 +1,11 @@
+# For the server
+gunicorn==20.0.4
+
+# For the application
+Flask==1.1.2
+Flask-SQLAlchemy==2.4.4
+numpy==1.18.4
+pandas==1.0.3
+pandas-datareader==0.8.1
+yfinance==0.1.54
+celery[redis]==5.0.5

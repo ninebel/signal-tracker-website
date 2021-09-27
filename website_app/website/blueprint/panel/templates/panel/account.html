@@ -1,0 +1,53 @@
+
+{% extends "panel/layout.html" %}
+
+{% block content %}
+
+    <h2>Informações de conta</h2>
+
+    {% for message in get_flashed_messages() %}
+    <div class="w3-panel w3-yellow w3-border w3-margin">
+        <h3>Atenção!</h3>
+        <p> {{ message }} </p>
+    </div>
+    {% endfor %}
+
+    <hr>
+    <p>
+        <label class="w3-text-black"><b>Nome:&emsp;</b> {{ api_call('users', 'get', id=session['id'], field='first_name') }}</label>
+    </p>
+    <hr>
+    <p>
+        <label class="w3-text-black"><b>Sobrenome:&emsp;</b> {{ api_call('users', 'get', id=session['id'], field='last_name') }}</label>
+    </p>
+    <hr>
+    <!-- This is for changing the mail -->
+    <form class="w3-container w3-white w3-large" action="/panel/account" method="POST">
+
+        {{ formEmail.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Email:&emsp;</b></label>
+            {{ formEmail.email }}
+        </p>
+        <input type="submit" name={{ formEmail.__class__.__name__ }} value="Atualizar email">
+    </form>
+    <hr>
+    <!-- This is for changing the password -->
+    <form class="w3-container w3-white w3-large" action="" method="POST">
+
+        {{ formPassword.csrf_token }}
+        <p>
+            <label class="w3-text-black"><b>Senha:&emsp;</b></label>
+            {{ formPassword.password }}
+        </p>
+        <p>
+            <label class="w3-text-black"><b>Repetir a senha:&emsp;</b></label>
+            {{ formPassword.repeat_password }}
+        </p>
+        <input type="submit" name={{ formPassword.__class__.__name__ }} value="Atualizar senha">
+    </form>
+    <hr>
+
+    </form>
+
+{% endblock %}
