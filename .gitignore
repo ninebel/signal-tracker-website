@@ -1,0 +1,8 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.vscode
+#.dockerignore
+#Dockerfile
+
+#*.py
+#example.py
